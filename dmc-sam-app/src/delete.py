@@ -9,6 +9,7 @@ dynamodb_client = boto3.client('dynamodb')
 
 def lambda_handler(event, context):
 
+  print("exec : delete api")
   body = json.loads(event["body"])
 
   dynamodb_client.put_item(TableName='DmcData', Item={'id': {'S': str(uuid.uuid4())}, \

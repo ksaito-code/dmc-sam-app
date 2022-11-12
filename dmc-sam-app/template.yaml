@@ -14,12 +14,13 @@ Globals:
     TracingEnabled: True
 
 Resources:
-  LambdaFunction:
+# レコード追加
+  DmcPostFunction:
     Type: AWS::Serverless::Function
     Description: 'Lambda function inserts data into DynamoDB table'
     Properties:
-      FunctionName: DmcFunction
-      Handler: index.lambda_handler
+      FunctionName: DmcPostFunction
+      Handler: post.lambda_handler
       Runtime: python3.9
       CodeUri: src/
       Policies:
@@ -31,6 +32,24 @@ Resources:
           Properties:
             Path: /
             Method: POST
+# レコード削除
+  DmcDeleteFunction:
+    Type: AWS::Serverless::Function
+    Description: 'Lambda function deletes data in DynamoDB table'
+    Properties:
+      FunctionName: DmcDelFunction
+      Handler: delete.lambda_handler
+      Runtime: python3.9
+      CodeUri: src/
+      Policies:
+        DynamoDBCrudPolicy:
+          TableName: !Ref DynamoDBTable
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /
+            Method: DELETE
   DynamoDBTable:
     Type: AWS::Serverless::SimpleTable
     Properties:

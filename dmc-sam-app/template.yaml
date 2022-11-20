@@ -107,6 +107,9 @@ Resources:
     Properties: 
       AttributeDefinitions: 
         - 
+          AttributeName: "daily_mood_id"
+          AttributeType: "S"
+        - 
           AttributeName: "user_id"
           AttributeType: "S"
         - 
@@ -114,13 +117,22 @@ Resources:
           AttributeType: "S"
       KeySchema: 
         - 
-          AttributeName: "user_id"
+          AttributeName: "daily_mood_id"
           KeyType: "HASH"
-        - 
-          AttributeName: "date"
-          KeyType: "RANGE"
       TableName: "DailyMoods"
       BillingMode: "PAY_PER_REQUEST"
+      GlobalSecondaryIndexes: 
+        - 
+          IndexName: "user_id_and_date_index"
+          KeySchema: 
+            - 
+              AttributeName: "user_id"
+              KeyType: "HASH"
+            - 
+              AttributeName: "date"
+              KeyType: "RANGE"
+          Projection: 
+            ProjectionType: ALL
 Outputs:
   EndpointUrl:
     Description: 'HTTP REST endpoint URL'

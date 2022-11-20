@@ -50,10 +50,35 @@ Resources:
           Properties:
             Path: /
             Method: DELETE
+# DynamoDB
   DynamoDBTable:
     Type: AWS::Serverless::SimpleTable
     Properties:
       TableName: DmcData
+# Templates Table
+  DmcTemplatesTable: 
+    Type: AWS::DynamoDB::Table
+    Properties: 
+      AttributeDefinitions: 
+        - 
+          AttributeName: "template_id"
+          AttributeType: "S"
+      KeySchema: 
+        - 
+          AttributeName: "template_id"
+          KeyType: "HASH"
+      TableName: "DmcTemplates"
+      BillingMode: "PAY_PER_REQUEST"
+      # GlobalSecondaryIndexes: 
+      #   - 
+      #     IndexName: ""
+      #     KeySchema: 
+      #       - 
+      #         AttributeName: "template_id"
+      #         KeyType: "HASH"
+      #       - 
+      #         AttributeName: "created_at"
+      #         KeyType: "RANGE"
 Outputs:
   EndpointUrl:
     Description: 'HTTP REST endpoint URL'

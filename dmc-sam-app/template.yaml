@@ -66,9 +66,6 @@ Resources:
         - 
           AttributeName: "created_by"
           AttributeType: "S"
-        - 
-          AttributeName: "created_at"
-          AttributeType: "S"
       KeySchema: 
         - 
           AttributeName: "template_id"
@@ -77,14 +74,11 @@ Resources:
       BillingMode: "PAY_PER_REQUEST"
       GlobalSecondaryIndexes: 
         - 
-          IndexName: "created_by_and_created_at_index"
+          IndexName: "created_by_index"
           KeySchema: 
             - 
               AttributeName: "created_by"
               KeyType: "HASH"
-            - 
-              AttributeName: "created_at"
-              KeyType: "RANGE"
           Projection: 
             ProjectionType: ALL
 # User Table
@@ -107,9 +101,6 @@ Resources:
     Properties: 
       AttributeDefinitions: 
         - 
-          AttributeName: "daily_mood_id"
-          AttributeType: "S"
-        - 
           AttributeName: "user_id"
           AttributeType: "S"
         - 
@@ -117,22 +108,13 @@ Resources:
           AttributeType: "S"
       KeySchema: 
         - 
-          AttributeName: "daily_mood_id"
+          AttributeName: "user_id"
           KeyType: "HASH"
+        - 
+          AttributeName: "date"
+          KeyType: "RANGE"
       TableName: "DailyMoods"
       BillingMode: "PAY_PER_REQUEST"
-      GlobalSecondaryIndexes: 
-        - 
-          IndexName: "user_id_and_date_index"
-          KeySchema: 
-            - 
-              AttributeName: "user_id"
-              KeyType: "HASH"
-            - 
-              AttributeName: "date"
-              KeyType: "RANGE"
-          Projection: 
-            ProjectionType: ALL
 Outputs:
   EndpointUrl:
     Description: 'HTTP REST endpoint URL'

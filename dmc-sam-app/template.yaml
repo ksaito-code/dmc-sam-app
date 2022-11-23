@@ -50,6 +50,42 @@ Resources:
           Properties:
             Path: /
             Method: DELETE
+# レコード取得
+  DmcGetFunction:
+    Type: AWS::Serverless::Function
+    Description: 'Lambda function gets data from DynamoDB table'
+    Properties:
+      FunctionName: DailyMoodsGetFunction
+      Handler: get_dm.lambda_handler
+      Runtime: python3.9
+      CodeUri: src/
+      Policies:
+        DynamoDBCrudPolicy:
+          TableName: !Ref DailyMoodsTable
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /get-dm
+            Method: POST
+# レコード取得（期間指定）
+  DmsGetFunction:
+    Type: AWS::Serverless::Function
+    Description: 'Lambda function gets data from DynamoDB table'
+    Properties:
+      FunctionName: DmsGetFunction
+      Handler: get_dms.lambda_handler
+      Runtime: python3.9
+      CodeUri: src/
+      Policies:
+        DynamoDBCrudPolicy:
+          TableName: !Ref DailyMoodsTable
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /get-dms
+            Method: POST
 # DynamoDB
   DynamoDBTable:
     Type: AWS::Serverless::SimpleTable

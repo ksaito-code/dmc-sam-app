@@ -8,6 +8,6 @@ architecture = "x86_64"
 handler = "index.lambda_handler"
 manifest_hash = ""
 packagetype = "Zip"
-functions = ["DmcPostFunction", "DmcDeleteFunction"]
+functions = ["DmcPostFunction", "DmcDeleteFunction", "DmcGetFunction", "DmsGetFunction"]
 
 [layer_build_definitions]

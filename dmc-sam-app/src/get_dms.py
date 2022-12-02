@@ -4,6 +4,7 @@
 import boto3
 import uuid
 import json
+from decimal import Decimal
 
 dynamodb = boto3.resource('dynamodb')
 
@@ -35,5 +36,10 @@ def lambda_handler(event, context):
 
   return {
       'statusCode': 200,
-      'body': json.dumps(items)
+      'body': json.dumps(items, default=decimal_default_proc)
   }
+  
+def decimal_default_proc(obj):
+  if isinstance(obj, Decimal):
+      return float(obj)
+  raise TypeError

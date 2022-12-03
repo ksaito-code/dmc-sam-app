@@ -17,6 +17,9 @@ def lambda_handler(event, context):
   date = body.get("date")
   mood = body.get("mood")
   sleeps = body.get("sleeps")
+  sleep_minutes = body.get("sleep_minutes")
+  memo = body.get("memo")
+
 
   # response = daily_moods_table.update_item(
   #     Key={'user_id': user_id, 'date': date},
@@ -30,7 +33,9 @@ def lambda_handler(event, context):
     "user_id" : user_id,
     "date" : date,
     "mood" : mood,
-    "sleeps" : sleeps
+    "sleeps" : sleeps,
+    "sleep_minutes" : sleep_minutes,
+    "memo" : memo
   }
   
   daily_moods_table.put_item(Item=item)

@@ -4,19 +4,19 @@ content-type: application/json
 {
 "sleeps": [
     {
-    "minutes_a_sleep": "20",
     "sleep_end_time": "2022-10-31 23:00",
     "sleep_start_time": "2022-11-01 04:00"
     },
     {
-    "minutes_a_sleep": "30",
     "sleep_end_time": "2022-11-01 05:00",
     "sleep_start_time": "2022-11-01 07:00"
     }
 ],
 "mood": "3",
 "user_id": "1",
-"date": "20221101"
+"sleep_minutes": "300",
+"memo": "今日のメモ",
+"date": "20221130"
 }
 
 ###

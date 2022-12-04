@@ -25,7 +25,7 @@ Resources:
       CodeUri: src/
       Policies:
         DynamoDBCrudPolicy:
-          TableName: !Ref DynamoDBTable
+          TableName: !Ref DailyMoodsTable
       Events:
         ApiEvent:
           Type: Api

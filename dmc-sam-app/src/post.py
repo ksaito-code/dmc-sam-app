@@ -2,7 +2,6 @@
 # SPDX-License-Identifier: MIT-0
 
 import boto3
-import uuid
 import json
 
 dynamodb = boto3.resource('dynamodb')
@@ -19,15 +18,7 @@ def lambda_handler(event, context):
   sleeps = body.get("sleeps")
   sleep_minutes = body.get("sleep_minutes")
   memo = body.get("memo")
-
-
-  # response = daily_moods_table.update_item(
-  #     Key={'user_id': user_id, 'date': date},
-  #     UpdateExpression="set mood = :m",
-  #     ExpressionAttributeValues={
-  #         ':m': mood
-  #         },
-  #     ReturnValues="UPDATED_NEW")
+  activities = body.get("activities")
   
   item = {
     "user_id" : user_id,
@@ -35,7 +26,8 @@ def lambda_handler(event, context):
     "mood" : mood,
     "sleeps" : sleeps,
     "sleep_minutes" : sleep_minutes,
-    "memo" : memo
+    "memo" : memo,
+    "activities" : activities
   }
   
   daily_moods_table.put_item(Item=item)

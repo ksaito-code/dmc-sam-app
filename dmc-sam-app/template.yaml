@@ -124,6 +124,25 @@ Resources:
           Properties:
             Path: /labels
             Method: POST
+# ActivityLabelsTable
+# レコード削除
+  ActivityLabelsDeleteFunction:
+    Type: AWS::Serverless::Function
+    Description: 'Lambda function deletes activity labels data in DynamoDB table'
+    Properties:
+      FunctionName: ActivityLabelsDelFunction
+      Handler: delete_labels.lambda_handler
+      Runtime: python3.9
+      CodeUri: src/
+      Policies:
+        DynamoDBCrudPolicy:
+          TableName: !Ref ActivityLabelsTable
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /labels
+            Method: DELETE
 # DynamoDB
   DynamoDBTable:
     Type: AWS::Serverless::SimpleTable

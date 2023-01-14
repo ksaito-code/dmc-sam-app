@@ -105,6 +105,25 @@ Resources:
           Properties:
             Path: /get-labels
             Method: POST
+# ActivityLabelsTable
+# レコード作成
+  ActivityLabelsPostFunction:
+    Type: AWS::Serverless::Function
+    Description: 'Lambda function inserts activity labels data from DynamoDB table'
+    Properties:
+      FunctionName: ActivityLabelsPostFunction
+      Handler: post_labels.lambda_handler
+      Runtime: python3.9
+      CodeUri: src/
+      Policies:
+        DynamoDBCrudPolicy:
+          TableName: !Ref ActivityLabelsTable
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /labels
+            Method: POST
 # DynamoDB
   DynamoDBTable:
     Type: AWS::Serverless::SimpleTable

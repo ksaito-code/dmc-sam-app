@@ -15,13 +15,15 @@ def lambda_handler(event, context):
   user_id = body['user_id']
   label_id = body['label_id']
 
-  activity_labels_table.delete_item(
-    Key={
-        'user_id': user_id,
-        'label_id': label_id,
-    },
-  )
+  activity_labels_table.update_item(
+    Key={'user_id': user_id, 'label_id': label_id},
+    UpdateExpression="set disabled = :d",
+    ExpressionAttributeValues={
+        ':d': True
+        },
+    ReturnValues="UPDATED_NEW")
+
   return {
       'statusCode': 200,
-      'body': 'Successfully deleted data!'
+      'body': 'Successfully disabled data!'
   }

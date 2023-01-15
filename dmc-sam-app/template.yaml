@@ -86,6 +86,63 @@ Resources:
           Properties:
             Path: /get-dms
             Method: POST
+# ActivityLabelsTable
+# レコード取得
+  ActivityLabelsGetFunction:
+    Type: AWS::Serverless::Function
+    Description: 'Lambda function gets activity labels data from DynamoDB table'
+    Properties:
+      FunctionName: ActivityLabelsGetFunction
+      Handler: get_labels.lambda_handler
+      Runtime: python3.9
+      CodeUri: src/
+      Policies:
+        DynamoDBCrudPolicy:
+          TableName: !Ref ActivityLabelsTable
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /get-labels
+            Method: POST
+# ActivityLabelsTable
+# レコード作成
+  ActivityLabelsPostFunction:
+    Type: AWS::Serverless::Function
+    Description: 'Lambda function inserts activity labels data from DynamoDB table'
+    Properties:
+      FunctionName: ActivityLabelsPostFunction
+      Handler: post_labels.lambda_handler
+      Runtime: python3.9
+      CodeUri: src/
+      Policies:
+        DynamoDBCrudPolicy:
+          TableName: !Ref ActivityLabelsTable
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /labels
+            Method: POST
+# ActivityLabelsTable
+# レコード削除
+  ActivityLabelsDeleteFunction:
+    Type: AWS::Serverless::Function
+    Description: 'Lambda function deletes activity labels data in DynamoDB table'
+    Properties:
+      FunctionName: ActivityLabelsDelFunction
+      Handler: delete_labels.lambda_handler
+      Runtime: python3.9
+      CodeUri: src/
+      Policies:
+        DynamoDBCrudPolicy:
+          TableName: !Ref ActivityLabelsTable
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /labels
+            Method: DELETE
 # DynamoDB
   DynamoDBTable:
     Type: AWS::Serverless::SimpleTable
@@ -150,6 +207,26 @@ Resources:
           AttributeName: "date"
           KeyType: "RANGE"
       TableName: "DailyMoods"
+      BillingMode: "PAY_PER_REQUEST"
+# ActivityLabels Table
+  ActivityLabelsTable: 
+    Type: AWS::DynamoDB::Table
+    Properties: 
+      AttributeDefinitions: 
+        - 
+          AttributeName: "user_id"
+          AttributeType: "S"
+        - 
+          AttributeName: "label_id"
+          AttributeType: "S"
+      KeySchema: 
+        - 
+          AttributeName: "user_id"
+          KeyType: "HASH"
+        - 
+          AttributeName: "label_id"
+          KeyType: "RANGE"
+      TableName: "ActivityLabels"
       BillingMode: "PAY_PER_REQUEST"
 Outputs:
   EndpointUrl:

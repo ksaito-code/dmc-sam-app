@@ -28,6 +28,7 @@ def lambda_handler(event, context):
     
   user_id = body['user_id']
   items = query(user_id)
+  items = sorted(items, key=lambda i: int(i['label_id']))
 
   return {
       'statusCode': 200,

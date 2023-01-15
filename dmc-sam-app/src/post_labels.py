@@ -38,4 +38,8 @@ def get_label_id(user_id):
           Key('user_id').eq(user_id)
   }
   items = activity_labels_table.query(**option).get('Items', [])
+  items = sorted(items, key=lambda i: int(i['label_id']))
+  if len(items) == 0 :
+    return 1
+  
   return int(items[-1]['label_id']) + 1
